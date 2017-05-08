@@ -2,236 +2,107 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-    <title>Даешь адаптивность!</title>
+    <title>Галерея</title>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Ubuntu');
-        nav{
-            padding: 0;
+        @keyframes name{
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(20px);
+            }
+            75% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
-        ul{
-            padding: 0;
+        @keyframes name1{
+            0%{
+                transform: rotate(0deg);
+            }
+            50%{
+                transform: rotate(180deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
         }
-        body{
-            font-family: 'Ubuntu', sans-serif;
-        }
-        img{
-            width: 70vw;
-            height: 20vh;
-            background-image: cover;
-            background-repeat: no-repeat;
-            border-radius: 10%;
-            position: relative;
-            left: calc(50% - 35vw);
-        }
-        h2{
-            font-size: 3rem;
-            text-align: center;
-        }
-        h3{
-            font-size: 1.5rem;
-            text-align: center;
-        }
-        article{
-            width: 45%;
-            height: 83vh;
-            position: relative;
-            left: 27.5%;
-            margin-bottom: 200px;
-        }
-        p{
-            margin: 5px -20px;
-        }
-        footer{
-            margin: 10px 0;
-        }
-        li{
-            display: block;
-            width: 200px;
-            margin: 10% 0;
-            position: relative;
-            left: calc(50% - 100px);
-        }
-        a{
-            text-decoration: none;
-            text-align: center;
-            display: block;
-            width: 100%;
-            height: 100%;
+        @keyframes name2{
+            0%{
+                transform: rotate(0deg) translate(0, 0);
+            }
+            50%{
+                transform: translate(-100px, 200px) rotate(200deg);
+            }
+            100%{
+                transform: translate(0, 0) rotate(0 deg);
+            }
             
         }
-        
-        @media(min-width: 400px){
-            img{
-                width: 70vw;
-                height: 25vh;
-                margin: 5vh 0;
-            }
-            article{
-                height: 90vh;
-                margin-bottom: 20px;
-            }
-            footer{
-                margin-top: 50px;
-            }
+        h1{
+            text-align: center;
+            font-size: 5rem;
         }
-        @media(min-width: 700px){
-            img{
-                width: 70vw;
-                height: 40vh;
-            }
-            footer{
-                margin-bottom: 40px;
-            }
-            li{
-                display: inline-block;
-                width: 20%;
-                left: 20%;
-
-            }
+        .pic{
+            width: 400px;
+            height: 400px;
+            display: inline-block;
+            margin: 300px calc(33.3% - 400px);
+            background-color: yellow;
+            vertical-align: top;
+            transition: 2s;
         }
-        @media(min-width: 1000px){
-            article{
-                display: inline-block;
-                width: 45%;
-                position: relative;
-                left: 2.5%;
-                top: 1%;
-                vertical-align: top;
-            }
-            img{
-                width: 70%;
-                position: relative;
-                left: 15%;
-            }
-            p{
-                display: block;
-                width: 70%;
-                position: relative;
-                left: 15%;
-            }
-            footer{
-                width: 70%;
-                position: relative;
-                left: 15%;
-            }
-            li{
-                width: 20%;
-                left: 20%;
-                margin: 2% 0;
-            }
+        .pic1:hover{
+            transform: translate(50px,20px);
         }
-        
+        .pic2:hover{
+            animation: name 1s ease 0s infinite alternate;
+        }
+        .pic3:hover{
+            animation: name1 0.5s linear 0s infinite normal;
+        }
+        .pic4:hover{
+            transform: translate(200px, 200px) rotate(270deg);
+        }
+        .pic5:hover{
+            transform: rotate(360deg) translate(100px, 100px);
+        }
+        .pic6:hover{
+            animation: name2 2s linear 0s infinite normal;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-  
    <header>
-      <nav>
-          <ul>
-              <li><a href = "#1">Биология</a></li>
-              <li><a href = "#2">Физика</a></li>
-              <li><a href = "#3">Оружие</a></li>
-          </ul>
-      </nav> 
+       <h1>Галерея</h1>
    </header>
    
-    <section id = "1">
-       <header>
-           <h2>Биология</h2>
-       </header>
-       
-       <article>
-           <header>
-               <h3>Ученые МГУ выделили три основных типа межкле<wbr>точного взаимо<wbr>действия</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/5ab/5ab0599095178c324d625fdeb58ce2d5.jpg">
-           </header>
-           <p>
-               Ученые МГУ изучили и систематизировали разные типы взаимодействия между клетками. Понимание выявленных механизмов межклеточного «общения» позволят ученым разрабатывать новые способы борьбы с разнообразными заболеваниями.
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-       
-       <article>
-           <header>
-               <h3>Генетики научились выключать тягу к сладкому</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/66f/66fe40c34a44d0c500f146e221886751.jpg">
-           </header>
-           <p>
-               Исследователи из Йельского университета нашли способ бороться с порочной страстью к сладкому. Правда, пока только у мушек-дрозофил, но очередь за Homo sapiens.
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-        
-    </section>
-    
-    <section id = "2">
-       <header>
-           <h2>Физика</h2>
-       </header>
-       <article>
-           <header>
-               <h3>Что важно понимать о квантовом устройстве мира?</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/855/855d6ea2f03b13e1170c1fa7ebd48ddf.jpg">
-           </header>
-           <p>
-               Законы квантовой физики совершенно не похожи на те, что царят в нашем мире макротел. Когда рассматриваешь их, кажется, что это некая иная Вселенная, которая каким-то образом существует внутри нашей. Как такое вообще возможно?
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-       
-       <article>
-           <header>
-               <h3>На БАКе, возможно, нашли новую частицу</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/b69/b69d6f7ea30c0246cf9aa4566eb9d10e.jpg">
-           </header>
-           <p>
-               Детектор LHCb Большого адронного коллайдера ЦЕРНе (Европейский совет ядерных исследований) под Женевой уже несколько раз зарегистрировал отклонение в данных о распаде B-мезонов, которую можно объяснить существованием новой, ранее неизвестной частицы.
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-        
-    </section>
-    
-    <section id = "3">
-       <header>
-           <h2>Оружие</h2>
-       </header>
-       <article>
-           <header>
-               <h3>Американцы начнут печатать глушители на 3D-принтере</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/6ad/6ad0f990cad5908b9b50e45d0eccac0e.jpg">
-           </header>
-           <p>
-               Подробности новинки в компании пока не раскрывают, но уже известно, что глушитель для стрелкового оружия будет единой деталью, без сборных элементов.
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-       
-       <article>
-           <header>
-               <h3>В Бауманке разрабатывают бронеамфибию для морского десанта</h3>
-               <img src = "http://www.popmeh.ru/upload/iblock/1cd/1cd70b43f72e57ca31488fd26064c0c3.png">
-           </header>
-           <p>
-              В МГТУ им. Баумана разрабатывают проект боевой машины морской пехоты — бронетранспортёра на суше и глиссирующего катера на воде. 
-           </p>
-           <footer>
-               Источник: <cite>Популярная механика</cite>
-           </footer>
-       </article>
-        
-    </section>
+   <main>
+       <div class = "pic pic1">
+           <img src = "https://hostingkartinok.com/uploads/images/2011/11/28db2c598ed5a18a982a157738c8c961.jpg">
+       </div>
+       <div class = "pic pic2">
+           <img src = "http://cs.pikabu.ru/images/previews_comm/2012-12_4/13559390585461.jpg">
+       </div>
+       <div class = "pic pic3">
+           <img src = "http://chromespot.com/wp-content/uploads/2013/04/LOL.jpg">
+       </div>
+       <div class = "pic pic4">
+           <img src = "http://risovach.ru/upload/2012/hand/trollface_orig_.jpg">
+       </div>
+       <div class = "pic pic5">
+           <img src = "http://www.quotemaster.org/images/ea/ea4b2e8906903c0c7fd2d89783c144b7.png">
+       </div>
+       <div class = "pic pic6">
+           <img src = "https://yt3.ggpht.com/-MhRmlNltkL8/AAAAAAAAAAI/AAAAAAAAAAA/6heKdBu4WrQ/s900-c-k-no-mo-rj-c0xffffff/photo.jpg">
+       </div>
+   </main>
     
 </body>
 </html>
