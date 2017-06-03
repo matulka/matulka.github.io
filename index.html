@@ -39,6 +39,8 @@
        var characterSpeed = 15;
        var frameSize = 20;
        var n = 0;
+       var textWidth = 200, textHeight = 50;
+       
        
        //Пропишем функцию генерации случайного числа
        function getRandomInt(min,max){
@@ -71,8 +73,8 @@
            if(arr[i][0] == 0){
                 arr[i][0] = 1; // обозначим ячейку с врагом заполненной
                 arr[i][1] = i%3 + 3; // присвоим значение хп
-                arr[i][2] = 1350; // присвоим значение по х
-                arr[i][3] = getRandomInt(0,650); // нарандомим значение по y
+                arr[i][2] = my_game.width; // присвоим значение по х
+                arr[i][3] = getRandomInt(0,my_game.height - weakEnemy.height - frameSize - 100); // нарандомим значение по y
                 var check = getRandomInt(1,4);
                 if (check == 1) arr[i][4] = -5;
                 if (check == 2) arr[i][4] = 0;
@@ -318,7 +320,7 @@
        })
        
        
-       var textWidth = 200, textHeight = 50;
+       
        
        
        
