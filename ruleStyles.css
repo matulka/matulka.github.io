@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Tinos');
+
+html{
+    background-color: #FFEFBF;
+}
+
+body{
+    font-family: 'Tinos', serif;
+    display: block;
+    position: relative;
+    background-color: #FFFFCD;
+    width: 80vw;
+    padding: 50px;
+    margin: 50px auto;
+}
+
+p{
+    font-size: 1.2rem;
+}
+
+h1{
+    text-align: center;
+}
+
+#arrows_img{
+    background-image: url(arrows.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#space_img{
+    background-image: url(space.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#arrows_img, #space_img{
+    height: 100px;
+}
+
+#game_begin{
+    display: inline-block;
+    margin: 100px 0;
+    background-color: #E88D43;
+    width: 30%;
+    height: 100px;
+    position: relative;
+    left: 35%;
+    text-decoration: none;
+    border: 5px solid #7F2747;
+    border-radius: 30px;
+}
+
+#game_begin_p{
+    margin: 0;
+    display: block;
+    position: absolute;
+    top: calc(50% - 11px);
+    left: calc(50% - 49.17px);
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}

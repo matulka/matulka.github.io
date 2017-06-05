@@ -1,335 +1,40 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Игра</title>
-    
-    <link rel = "stylesheet" type = "text/css" href = "gameStyles.css">
-    
-</head>
-<body>
-  
-   <canvas id = "my_game">
-       Браузер староват будет. Лучше обновите.
-   </canvas>
-   
-   <script>
-       "use strict";
-       var gm = my_game.getContext('2d');
-       my_game.width = window.innerWidth - 20;
-       my_game.height = window.innerHeight - 20;
-       
-       var weakEnemy = new Image();
-       weakEnemy.src = "weak.jpg";
-       
-       var mediumEnemy = new Image();
-       mediumEnemy.src = "medium.jpg";
-       
-       var strongEnemy = new Image();
-       strongEnemy.src = "strong.jpg";
-       
-       var MC_img = new Image();
-       MC_img.src = "mc.jpg";
-       
-       var bulletImg = new Image();
-       bulletImg.src = "bullet.jpg";
-       
-       var flag = 1;
-       var enemySpeed = 1;
-       var characterSpeed = 15;
-       var frameSize = 20;
-       var n = 0;
-       var textWidth = 200, textHeight = 50;
-       
-       
-       //Пропишем функцию генерации случайного числа
-       function getRandomInt(min,max){
-           return Math.floor(Math.random() * (max-min)) + min;
-       }
-       
-       
-       //Пропишем координаты ГГ
-       var MC_x = 100;
-       var MC_y = (my_game.height - MC_img.height)/2 - 100;
-       
-       //Пропишем прорисовку ГГ
-       function drawMC(img, x, y){
-        gm.drawImage(img, x, y);
-       }
-       //Пропишем генерацию врага
-       var enemies = [
-           [0, 0 ,0, 0, 0],
-           [0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0]
-       ];
-       
-       
-       
-       function generateEnemy(arr){
-           var i = getRandomInt(0,arr.length);
-           if(arr[i][0] == 0){
-                arr[i][0] = 1; // обозначим ячейку с врагом заполненной
-                arr[i][1] = i%3 + 3; // присвоим значение хп
-                arr[i][2] = my_game.width; // присвоим значение по х
-                arr[i][3] = getRandomInt(0,my_game.height - weakEnemy.height - frameSize - 100); // нарандомим значение по y
-                var check = getRandomInt(1,4);
-                if (check == 1) arr[i][4] = -5;
-                if (check == 2) arr[i][4] = 0;
-                if (check == 3) arr[i][4] = 5;
-           }
-           
-       }
-       
-       
-
-       
-       function drawEnemy(arr, img1, img2, img3){
-           var i = 0;
-           for (i; i < arr.length; i++){
-               if (arr[i][0] == 1){
-                   if (i%3 == 0){
-                       gm.drawImage(img1,arr[i][2],arr[i][3]);
-                   }
-                   if (i%3 == 1){
-                       gm.drawImage(img2,arr[i][2],arr[i][3]);
-                   }
-                   if (i%3 == 2){
-                       gm.drawImage(img3,arr[i][2],arr[i][3]);
-                   }
-               }
-           }
-       }
-       
-       
-       
-       function checkLiving(arr){
-           for (var i = 0; i < arr.length; i++){
-               if (arr[i][0]){
-                   if (arr[i][1] <= 0){
-                       for (var j = 0; j < arr[0].length; j++) arr[i][j] = 0;
-                   }
-               }
-           }
-       }
-       
-       //Пропишем процесс стрельбы
-       
-       var bullets = [
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0],
-           [0, 0, 0]
-       ];
-       
-       function shoot(arr, x, y, w, h){
-           var i = 0;
-           for (i; i < arr.length && arr[i][0] == 1; i++);
-           if (i < arr.length){
-               arr[i][0] = 1;
-               arr[i][1] = x + w;
-               arr[i][2] = y + h/2;
-           }
-       }
-       
-       function drawBullets(arr, img){
-           for (var i = 0; i < arr.length; i++){
-               if (arr[i][0]){
-                   gm.drawImage(img, arr[i][1], arr[i][2]);
-               }
-           }
-       }
-       
-       //Пропишем функцию обновления таймера
-       
-       function timer(n){
-           gm.clearRect(my_game.width - textWidth - frameSize, my_game.height - textHeight - frameSize, textWidth, textHeight);
-           gm.fillStyle = "black";
-           gm.strokeRect(my_game.width - textWidth - frameSize, my_game.height - textHeight - frameSize, textWidth, textHeight);
-       }
-       
-       //Пропишем основную функцию
-       function main(){
-           
-           window.requestAnimationFrame(main);
-           gm.clearRect(0,0,my_game.width, my_game.height);
-           
-           gm.fillRect(0,my_game.height - frameSize, my_game.width, frameSize);
-           gm.fillRect(my_game.width - frameSize, 0, frameSize, my_game.height);
-           
-           drawMC(MC_img, MC_x, MC_y);
-           drawEnemy(enemies, weakEnemy, mediumEnemy, strongEnemy);
-           drawBullets(bullets, bulletImg);
-           
-           console.log(MC_x);
-           
-           // Изменим координаты врагов
-           
-           for (var i = 0; i < enemies.length; i++){
-               if (enemies[i][0]){
-                   enemies[i][2] -= 5;
-                   enemies[i][3] += enemies[i][4];
-               }
-           }
-           
-           
-           //Проверим сравнимость координат врагов с левым краем
-           
-           for (var i = 0; i < enemies.length; i++){
-               if (enemies[i][0]){
-                   if (enemies[i][2] <= 0){
-                       enemies[i][1] = 0;
-                   }
-               }
-           }
-           
-           //Проверим, не ударился ли враг о стенку
-           
-           for (var i = 0; i < enemies.length; i++){
-               if (enemies[i][0]){
-                   if (enemies[i][3] <= 0 || enemies[i][3] + weakEnemy.height >= my_game.height - frameSize) enemies[i][4] *= -1;
-               }
-           }
-           
-           //Изменим координаты пуль
-           
-           for (var i = 0; i < bullets.length; i++){
-               if (bullets[i][0]){
-                   bullets[i][1] += 5;
-               }
-           }
-           
-           //Уменьшим хп врагов в зависимости от попаданий
-           
-           for (var i = 0; i < bullets.length; i++){
-               for (var j = 0; j < enemies.length; j++){
-                   if (enemies[j][0] && bullets[i][0] && bullets[i][1] + bulletImg.width >= enemies[j][2] && bullets[i][1] <= enemies[j][2] + weakEnemy.width && bullets[i][2] + bulletImg.height >= enemies[j][3] && bullets[i][2] <= enemies[j][3] + weakEnemy.height){
-                       bullets[i][0] = 0;
-                       enemies[j][1] -= 1;
-                   }
-               }
-           }
-           
-           checkLiving(enemies);
-           
-           //Уберем пули, которые зашли за край экрана
-           
-           for (var i = 0; i < bullets.length; i++){
-               if (bullets[i][0] && bullets[i][1] + bulletImg.width >= my_game.width - frameSize) bullets[i][0] = 0;
-           }
-           
-           //Проверим, жив ли герой
-           
-           if (MC_x <= 0 || MC_y <= 0 || MC_y >= my_game.height - frameSize - MC_img.height || MC_x >= my_game.width - frameSize - MC_img.width){
-               alert("Игра окончена! \nВаш счет равен " + n);
-               for (var i = 0; i < bullets.length; i++) bullets[i][0] = 0;
-               for (var i = 0; i < enemies.length; i++) enemies[i][0] = 0;
-               MC_x = 100;
-               MC_y = (my_game.height - MC_img.height)/2 - 100;
-               n = 0;
-           }
-           
-           for (var i = 0; i < enemies.length; i++){
-               if (enemies[i][0]){
-                   if (MC_x + MC_img.width >= enemies[i][2] && MC_x <= enemies[i][2] + weakEnemy.width && MC_y + MC_img.height >= enemies[i][3] && MC_y <= enemies[i][3] + weakEnemy.height){
-                       alert("Игра окончена! \nВаш счет равен " + n);
-                       for (var i = 0; i < bullets.length; i++) bullets[i][0] = 0;
-                       for (var i = 0; i < enemies.length; i++) enemies[i][0] = 0;
-                       MC_x = 100;
-                       MC_y = (my_game.height - MC_img.height)/2 - 100;
-                       n = 0;
-                   }
-               }
-           }
-           
-           //Пропишем вывод таймера
-           
-           gm.fillStyle = "white";
-           gm.fillRect(my_game.width - textWidth - frameSize, my_game.height - textHeight - frameSize, textWidth, textHeight);
-           gm.fillStyle = "black";
-           gm.strokeRect(my_game.width - textWidth - frameSize, my_game.height - textHeight - frameSize, textWidth, textHeight);
-           gm.font = 'bold 30px Cabin';
-           gm.fillText(n, my_game.width - textWidth - frameSize + 10, my_game.height - frameSize - textHeight / 3, textWidth);
-           
-       }
-       
-       window.requestAnimationFrame(main);
-       
-       setInterval(function(){n++;}, 1000);
-       
-       
-       var k = 2000;
-       setTimeout(function generatingTimeout(){
-           k -= 10;
-           generateEnemy(enemies);
-           setTimeout(generatingTimeout, k);
-       }, k)
-       
-       
-       
-       
-       function navigate(event){
-           if (event.keyCode == 39) MC_x += characterSpeed;
-           if (event.keyCode == 37) MC_x -= characterSpeed;
-           if (event.keyCode == 38) MC_y -= characterSpeed;
-           if (event.keyCode == 40) MC_y += characterSpeed;
-       }
-       
-       addEventListener('keydown', navigate);
-       
-       addEventListener('keyup', function(event){
-           if (event.keyCode == 32) shoot(bullets, MC_x, MC_y, MC_img.width, MC_img.height);
-       })
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-    </script>
-    
-</body>
-</html>
+ <!DOCTYPE html>
+ <html lang="ru">
+ <head>
+     <meta charset="UTF-8">
+     <title>Стартовая страница</title>
+     <link rel = "stylesheet" type = "text/css" href = "ruleStyles.css">
+ </head>
+ <body>
+    <header>
+        <h1>Игра "Страшный сон"</h1>
+    </header>
+    <main>
+        <article>
+            <h2>Здравствуйте!</h2>
+            <p>Мы приветствуем Вас на стартовой странице игры "Страшный сон".</p>
+            <p>Перед тем, как приступить к игровому процессу, советуем Вам ознакомиться с управлением.</p>
+        </article>
+        <article>
+            <h2>Управление</h2>
+            <p class = "rules_p">Используйте</p>
+            <div id = "arrows_img"></div>
+            <p class = "rules_p">, чтобы перемещаться</p>
+        </article>
+        <article>
+            <p class = "rules_p">Используйте</p>
+            <div id = "space_img"></div>
+            <p class = "rules_p">, чтобы стрелять</p> 
+        </article>
+        <article>
+            <p>Желаем Вам приятной игры!</p>
+            <a href = "game.html" id = "game_begin"><p id = "game_begin_p">Начать игру</p></a>
+        </article>
+    </main>
+    <footer>
+        <h2>Авторы</h2>
+        <p>Верстка сайта - Евгений Сизых</p>
+        <p>Дизайн персонажей - Хороший человек, который предпочел не раскрывать свою личность (а зря)</p>
+    </footer>
+ </body>
+ </html>
